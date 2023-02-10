@@ -29,7 +29,7 @@ public class User {
         DisplayBalance();
     }
 
-    public void subtractFromBalance(double amount){
+    public void SubtractFromBalance(double amount){
         if(cashBalance >= amount){ // checks to see if the amount given by the user "cashBalance" is greater than amount we are looking to subtract from the cost of an item.
             cashBalance -= amount; //if it is then we subtract the amount and then the new cashBalance given
         } else {

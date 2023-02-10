@@ -3,8 +3,9 @@ package com.techelevator;
 import com.techelevator.view.ProductItems;
 
 public class Drinks extends ProductItems {
-    public Drinks(String name) {
-        super(name);
+
+    public Drinks(String code, String name, double price, String type, int numberOfItems) {
+        super(code, name, price, type, numberOfItems);
     }
 
     @Override
