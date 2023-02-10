@@ -1,5 +1,6 @@
 package com.techelevator.view;
 
+import com.techelevator.Drinks;
 import com.techelevator.ProductCount;
 
 import java.io.File;
@@ -100,6 +101,7 @@ public class VendingMenu {
 
 	public void SelectProduct() {
 
+		String soundMessage = "";
 		DisplayMenu();
 		Scanner input = new Scanner(System.in); //initializes a scanner to take in user input of item code
 		System.out.println("Enter product code: "); // asks user for item code
@@ -114,7 +116,19 @@ public class VendingMenu {
 				itemPrice = actualProducts.get(i).getPrice();
 				SubtractFromBalance(itemPrice);
 
+				actualProducts.get(i).setNumberOfItems(actualProducts.get(i).getNumberOfItems() - 1);
+
+
+
+
+//
+////				System.out.println(actualProducts.get(i).getSoundEffects());
+//				soundMessage = actualProducts.get(i).getSoundEffects();
+//				System.out.println(soundMessage);
+
+
 			}
+		}
 
 
 //			if (selectedSnack == null) { //if selected snack is null then provide invalid message
@@ -136,7 +150,7 @@ public class VendingMenu {
 
 		}
 
-	}
+
 
 	public void FeedMoney() {
 
