@@ -3,16 +3,17 @@ package com.techelevator;
 import com.techelevator.view.ProductItems;
 
 public class Drinks extends ProductItems {
-    String soundEffects;
 
-    public Drinks(String code, String name, double price, String type, int numberOfItems) {
-        super(code, name, price, "Drinks", numberOfItems);
+    private String soundEffect;
+
+    public Drinks(String code, String name, double price, String type) {
+        super(code, name, price, "Drinks");
     }
 
     @Override
-    public String getSoundEffects(){
-        this.soundEffects = "Glug Glug, Chug Chug!";
-        return this.soundEffects;
+    public String getSoundEffect(){
+        this.soundEffect = "Glug Glug, Chug Chug!";
+        return this.soundEffect;
     }
 
 }

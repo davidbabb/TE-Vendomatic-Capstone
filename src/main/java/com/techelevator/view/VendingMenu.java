@@ -1,7 +1,6 @@
 package com.techelevator.view;
 
-import com.techelevator.Drinks;
-import com.techelevator.ProductCount;
+import com.techelevator.*;
 
 import java.io.File;
 import java.io.InputStream;
@@ -73,25 +72,42 @@ public class VendingMenu {
 		out.flush();
 	}
 
-	public void DisplayMenu() {
+	public void CreateList() {
 
 		try (Scanner fileScanner = new Scanner(readingFile)) {
 			System.out.printf("\n%-5s %-20s %-10s %-5s \n\n", "ID", "Product", "Price", "Quantity");
 
+			int i = 0;
+
 			while (fileScanner.hasNextLine()) {
 
 				String s = fileScanner.nextLine();
-				int barOne = s.indexOf("|");
-				int barTwo = s.indexOf("|", barOne + 1);
-				int barThree = s.lastIndexOf("|");
-				String code = s.substring(0, barOne);
-				String product = s.substring(barOne + 1, barTwo);
-				String price = s.substring(barTwo + 1, barThree);
-				String type = s.substring(barThree + 1, s.length());
+				String[] arr = s.split("\\|");
+				String code = arr[0];
+				String product = arr[1];
+				String price = arr[2];
+				String type = arr[3];
 				double doublePrice = Double.parseDouble(price);
-				ProductItems fullMenu = new ProductItems(code, product, doublePrice, type, 5);
-				actualProducts.add(fullMenu);
-				System.out.printf("%-5s %-20s %-10s %-5s \n", fullMenu.getCode(), fullMenu.getName(), ("$" + fullMenu.getPrice()), fullMenu.getNumberOfItems());
+				if (i < 4) {
+					Chips chips = new Chips(code, product, doublePrice, type);
+					actualProducts.add(chips);
+					i++;
+				} else if (i < 8) {
+					Candy candy = new Candy(code, product, doublePrice, type);
+					actualProducts.add(candy);
+					i++;
+				} else if (i < 12) {
+					Drinks drinks = new Drinks(code, product, doublePrice, type);
+					actualProducts.add(drinks);
+					i++;
+				} else {
+					Gum gum = new Gum(code, product, doublePrice, type);
+					actualProducts.add(gum);
+					i++;
+				}
+//				ProductItems productItems = new ProductItems(code, product, doublePrice, type);
+//				actualProducts.add(fullMenu);
+//				System.out.printf("%-5s %-20s %-10s %-5s \n", fullMenu.getCode(), fullMenu.getName(), ("$" + fullMenu.getPrice()), fullMenu.getNumberOfItems());
 
 			}
 		} catch (Exception e) {
@@ -99,9 +115,97 @@ public class VendingMenu {
 		}
 	}
 
+//	public void UpdateMenu(ProductItems item, int number) {
+//
+//		try (Scanner fileScanner = new Scanner(readingFile)) {
+//			System.out.printf("\n%-5s %-20s %-10s %-5s \n\n", "ID", "Product", "Price", "Quantity");
+//
+//			int i = 0;
+//
+//			while (fileScanner.hasNextLine()) {
+//
+//				String s = fileScanner.nextLine();
+//				String[] arr = s.split("\\|");
+//				String code = arr[0];
+//				String product = arr[1];
+//				String price = arr[2];
+//				String type = arr[3];
+//				double doublePrice = Double.parseDouble(price);
+//				if (i < 4) {
+//					Chips chips = new Chips(code, product, doublePrice, type);
+//					actualProducts.add(chips);
+//					System.out.printf("%-5s %-20s %-10s %-5s \n", chips.getCode(), chips.getName(), ("$" + chips.getPrice()), chips.getNumberOfItems());
+//					i++;
+//				} else if (i < 8) {
+//					Candy candy = new Candy(code, product, doublePrice, type);
+//					actualProducts.add(candy);
+//					System.out.printf("%-5s %-20s %-10s %-5s \n", candy.getCode(), candy.getName(), ("$" + candy.getPrice()), candy.getNumberOfItems());
+//					i++;
+//				} else if (i < 12) {
+//					Drinks drinks = new Drinks(code, product, doublePrice, type);
+//					actualProducts.add(drinks);
+//					System.out.printf("%-5s %-20s %-10s %-5s \n", drinks.getCode(), drinks.getName(), ("$" + drinks.getPrice()), drinks.getNumberOfItems());
+//				} else {
+//					Gum gum = new Gum(code, product, doublePrice, type);
+//					actualProducts.add(gum);
+//					System.out.printf("%-5s %-20s %-10s %-5s \n", gum.getCode(), gum.getName(), ("$" + gum.getPrice()), gum.getNumberOfItems());
+//					i++;
+//				}
+////				ProductItems productItems = new ProductItems(code, product, doublePrice, type);
+////				actualProducts.add(fullMenu);
+////				System.out.printf("%-5s %-20s %-10s %-5s \n", fullMenu.getCode(), fullMenu.getName(), ("$" + fullMenu.getPrice()), fullMenu.getNumberOfItems());
+//
+//			}
+//		} catch (Exception e) {
+//			System.out.println("Error");
+//		}
+//	}
+
+		public void DisplayMenu() {
+
+		try (Scanner fileScanner = new Scanner(readingFile)) {
+			System.out.printf("\n%-5s %-20s %-10s %-5s \n\n", "ID", "Product", "Price", "Quantity");
+
+			int i = 0;
+
+			while (fileScanner.hasNextLine()) {
+
+				String s = fileScanner.nextLine();
+				String[] arr = s.split("\\|");
+				String code = arr[0];
+				String product = arr[1];
+				String price = arr[2];
+				String type = arr[3];
+				double doublePrice = Double.parseDouble(price);
+				if (i < 4) {
+					Chips chips = new Chips(code, product, doublePrice, type);
+					System.out.printf("%-5s %-20s %-10s %-5s \n", chips.getCode(), chips.getName(), ("$" + chips.getPrice()), chips.getNumberOfItems());
+					i++;
+				} else if (i < 8) {
+					Candy candy = new Candy(code, product, doublePrice, type);
+					System.out.printf("%-5s %-20s %-10s %-5s \n", candy.getCode(), candy.getName(), ("$" + candy.getPrice()), candy.getNumberOfItems());
+					i++;
+				} else if (i < 12) {
+					Drinks drinks = new Drinks(code, product, doublePrice, type);
+					System.out.printf("%-5s %-20s %-10s %-5s \n", drinks.getCode(), drinks.getName(), ("$" + drinks.getPrice()), drinks.getNumberOfItems());
+				} else {
+					Gum gum = new Gum(code, product, doublePrice, type);
+					System.out.printf("%-5s %-20s %-10s %-5s \n", gum.getCode(), gum.getName(), ("$" + gum.getPrice()), gum.getNumberOfItems());
+					i++;
+				}
+//				ProductItems productItems = new ProductItems(code, product, doublePrice, type);
+//				actualProducts.add(fullMenu);
+//				System.out.printf("%-5s %-20s %-10s %-5s \n", fullMenu.getCode(), fullMenu.getName(), ("$" + fullMenu.getPrice()), fullMenu.getNumberOfItems());
+
+			}
+		} catch (Exception e) {
+			System.out.println("Error");
+		}
+	}
+
+
 	public void SelectProduct() {
 
-		String soundMessage = "";
 		DisplayMenu();
 		Scanner input = new Scanner(System.in); //initializes a scanner to take in user input of item code
 		System.out.println("Enter product code: "); // asks user for item code
@@ -116,16 +220,8 @@ public class VendingMenu {
 				itemPrice = actualProducts.get(i).getPrice();
 				SubtractFromBalance(itemPrice);
 
-				actualProducts.get(i).setNumberOfItems(actualProducts.get(i).getNumberOfItems() - 1);
 
-
-
-
-//
-////				System.out.println(actualProducts.get(i).getSoundEffects());
-//				soundMessage = actualProducts.get(i).getSoundEffects();
-//				System.out.println(soundMessage);
-
+				System.out.println(actualProducts.get(i).getSoundEffect());
 
 			}
 		}
@@ -150,8 +246,6 @@ public class VendingMenu {
 
 		}
 
-
-
 	public void FeedMoney() {
 
 		Scanner input = new Scanner(System.in);
@@ -171,5 +265,6 @@ public class VendingMenu {
 			throw new IllegalArgumentException("Insufficient funds"); //if the cashBalance of the user is less then we use throw to have program say "Insufficient funds"
 		}
 	}
+
 
 }

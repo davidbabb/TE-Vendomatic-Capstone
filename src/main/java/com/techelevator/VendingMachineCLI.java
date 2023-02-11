@@ -30,9 +30,10 @@ public class VendingMachineCLI {
 
 	public void run() {
 		boolean running = true;
-		String pathOfFile = "C:\\Users\\Student\\workspace\\module-1-capstone-team-0\\vendingmachine.csv";
-		File readingFile = new File(pathOfFile);
+//		String pathOfFile = "C:\\Users\\Student\\workspace\\module-1-capstone-team-0\\vendingmachine.csv";
+//		File readingFile = new File(pathOfFile);
 		User user = new User();
+		menu.CreateList();
 		while (running) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 

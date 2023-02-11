@@ -2,12 +2,9 @@ package com.techelevator.view;
 
 import com.techelevator.ProductCount;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
-public class ProductItems {
+public abstract class ProductItems{
 
     Scanner userInput = new Scanner(System.in); //Taking in user input for main menu
     private String code;
@@ -15,15 +12,15 @@ public class ProductItems {
     private double price;
     private String type;
     private int numberOfItems;
-    private String soundEffects;
+    private String soundEffect;
 
-    public ProductItems(String code, String name, double price, String type, int numberOfItems){
+    public ProductItems(String code, String name, double price, String type){
 
         this.code = code;
         this.name = name;
         this.price = price;
         this.type = type;
-        this.numberOfItems = numberOfItems;
+        this.numberOfItems = 5;
 
     }
 
@@ -47,12 +44,12 @@ public class ProductItems {
         return type;
     }
 
-    public String getSoundEffects() {
-        return soundEffects;
-    }
-
     public int getNumberOfItems() {
         return numberOfItems;
+    }
+
+    public String getSoundEffect() {
+        return soundEffect;
     }
 
     public static ProductCount getSnackByItemCode(String code){ //creating a method to creat an array of ProductCount objects which start off empty [0].
@@ -71,7 +68,9 @@ public class ProductItems {
         }
     }
 
-
+    public void SubtractItem() {
+        this.numberOfItems = numberOfItems - 1;
+    }
 
 
 }
