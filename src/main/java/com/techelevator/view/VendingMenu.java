@@ -2,11 +2,9 @@ package com.techelevator.view;
 
 import com.techelevator.*;
 
-import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class VendingMenu {
@@ -15,9 +13,7 @@ public class VendingMenu {
 	private Scanner in;
 	private List<ProductItems> actualProducts = new ArrayList<>();
 	private double cashBalance;
-
-	String pathOfFile = "C:\\Users\\Student\\workspace\\module-1-capstone-team-0\\vendingmachine.csv";
-	File readingFile = new File(pathOfFile);
+	private double totalMoney;
 
 	public VendingMenu(InputStream input, OutputStream output) {
 		this.out = new PrintWriter(output);
@@ -53,13 +49,13 @@ public class VendingMenu {
 			// eat the exception, an error message will be displayed below since choice will be null
 		}
 		if (choice == null) {
-			out.println(System.lineSeparator() + "*** " + userInput + " is not a valid option ***" + System.lineSeparator());
+			out.println(System.lineSeparator() + "*** " + userInput + " is not a valid option ***");
 		}
 		return choice;
 	}
 
 	public void DisplayBalance(){
-		System.out.println("\n" + "Your total balance: " + "$" + getCashBalance());
+		System.out.println("\n" + "Your total balance: " + "$" + CurrencyFormat(getCashBalance()));
 	}
 
 	private void displayMenuOptions(Object[] options) {
@@ -74,6 +70,9 @@ public class VendingMenu {
 
 	public void CreateList() {
 
+		String pathOfFile = "C:\\Users\\Student\\workspace\\module-1-capstone-team-0\\vendingmachine.csv";
+		File readingFile = new File(pathOfFile);
+
 		try (Scanner fileScanner = new Scanner(readingFile)) {
 
 			int i = 0;
@@ -86,7 +85,9 @@ public class VendingMenu {
 				String product = arr[1];
 				String price = arr[2];
 				String type = arr[3];
+
 				double doublePrice = Double.parseDouble(price);
+
 				if (i < 4) {
 					Chips chips = new Chips(code, product, doublePrice, type);
 					actualProducts.add(chips);
@@ -104,125 +105,65 @@ public class VendingMenu {
 					actualProducts.add(gum);
 					i++;
 				}
-//				ProductItems productItems = new ProductItems(code, product, doublePrice, type);
-//				actualProducts.add(fullMenu);
-//				System.out.printf("%-5s %-20s %-10s %-5s \n", fullMenu.getCode(), fullMenu.getName(), ("$" + fullMenu.getPrice()), fullMenu.getNumberOfItems());
 
 			}
 		} catch (Exception e) {
 			System.out.println("Error");
 		}
 	}
-
-//	public void UpdateMenu(ProductItems item, int number) {
-//
-//		try (Scanner fileScanner = new Scanner(readingFile)) {
-//			System.out.printf("\n%-5s %-20s %-10s %-5s \n\n", "ID", "Product", "Price", "Quantity");
-//
-//			int i = 0;
-//
-//			while (fileScanner.hasNextLine()) {
-//
-//				String s = fileScanner.nextLine();
-//				String[] arr = s.split("\\|");
-//				String code = arr[0];
-//				String product = arr[1];
-//				String price = arr[2];
-//				String type = arr[3];
-//				double doublePrice = Double.parseDouble(price);
-//				if (i < 4) {
-//					Chips chips = new Chips(code, product, doublePrice, type);
-//					actualProducts.add(chips);
-//					System.out.printf("%-5s %-20s %-10s %-5s \n", chips.getCode(), chips.getName(), ("$" + chips.getPrice()), chips.getNumberOfItems());
-//					i++;
-//				} else if (i < 8) {
-//					Candy candy = new Candy(code, product, doublePrice, type);
-//					actualProducts.add(candy);
-//					System.out.printf("%-5s %-20s %-10s %-5s \n", candy.getCode(), candy.getName(), ("$" + candy.getPrice()), candy.getNumberOfItems());
-//					i++;
-//				} else if (i < 12) {
-//					Drinks drinks = new Drinks(code, product, doublePrice, type);
-//					actualProducts.add(drinks);
-//					System.out.printf("%-5s %-20s %-10s %-5s \n", drinks.getCode(), drinks.getName(), ("$" + drinks.getPrice()), drinks.getNumberOfItems());
-//				} else {
-//					Gum gum = new Gum(code, product, doublePrice, type);
-//					actualProducts.add(gum);
-//					System.out.printf("%-5s %-20s %-10s %-5s \n", gum.getCode(), gum.getName(), ("$" + gum.getPrice()), gum.getNumberOfItems());
-//					i++;
-//				}
-////				ProductItems productItems = new ProductItems(code, product, doublePrice, type);
-////				actualProducts.add(fullMenu);
-////				System.out.printf("%-5s %-20s %-10s %-5s \n", fullMenu.getCode(), fullMenu.getName(), ("$" + fullMenu.getPrice()), fullMenu.getNumberOfItems());
-//
-//			}
-//		} catch (Exception e) {
-//			System.out.println("Error");
-//		}
-//	}
 
 		public void DisplayMenu() {
 
-		try (Scanner fileScanner = new Scanner(readingFile)) {
 			System.out.printf("\n%-5s %-20s %-10s %-5s \n\n", "ID", "Product", "Price", "Quantity");
 
-			int i = 0;
+			for (ProductItems actualProduct : actualProducts) {
 
-			while (fileScanner.hasNextLine()) {
-
-				String s = fileScanner.nextLine();
-				String[] arr = s.split("\\|");
-				String code = arr[0];
-				String product = arr[1];
-				String price = arr[2];
-				String type = arr[3];
-				double doublePrice = Double.parseDouble(price);
-				if (i < 4) {
-					Chips chips = new Chips(code, product, doublePrice, type);
-					System.out.printf("%-5s %-20s %-10s %-5s \n", chips.getCode(), chips.getName(), ("$" + chips.getPrice()), chips.getNumberOfItems());
-					i++;
-				} else if (i < 8) {
-					Candy candy = new Candy(code, product, doublePrice, type);
-					System.out.printf("%-5s %-20s %-10s %-5s \n", candy.getCode(), candy.getName(), ("$" + candy.getPrice()), candy.getNumberOfItems());
-					i++;
-				} else if (i < 12) {
-					Drinks drinks = new Drinks(code, product, doublePrice, type);
-					System.out.printf("%-5s %-20s %-10s %-5s \n", drinks.getCode(), drinks.getName(), ("$" + drinks.getPrice()), drinks.getNumberOfItems());
-				} else {
-					Gum gum = new Gum(code, product, doublePrice, type);
-					System.out.printf("%-5s %-20s %-10s %-5s \n", gum.getCode(), gum.getName(), ("$" + gum.getPrice()), gum.getNumberOfItems());
-					i++;
-				}
-//				ProductItems productItems = new ProductItems(code, product, doublePrice, type);
-//				actualProducts.add(fullMenu);
-//				System.out.printf("%-5s %-20s %-10s %-5s \n", fullMenu.getCode(), fullMenu.getName(), ("$" + fullMenu.getPrice()), fullMenu.getNumberOfItems());
+				System.out.printf("%-5s %-20s %-10s %-5s \n", actualProduct.getCode(), actualProduct.getName(), ("$" + CurrencyFormat(actualProduct.getPrice())), actualProduct.getNumberOfItems());
 
 			}
-		} catch (Exception e) {
-			System.out.println("Error");
+
 		}
-	}
 
 
-	public void SelectProduct() {
+
+	public void SelectProduct() throws SoldOut{
 
 		DisplayMenu();
 		Scanner input = new Scanner(System.in); //initializes a scanner to take in user input of item code
-		System.out.println("Enter product code: "); // asks user for item code
+		System.out.println("\nEnter product code: "); // asks user for item code
 		String productCode = input.nextLine().toUpperCase(); //forces all input to Upper casing matching the .csv file
-//		ProductCount selectedSnack = ProductCount.getSnackByItemCode(productCode); //calls method getSnackByItemCode from the ProductCount class and passing the value of the productCode. This will give us an instance of ProductCount class that will correspond to the productCode and it will be stored into selectedSnack
 		double itemPrice = 0.00;
 
 		for (int i = 0; i < actualProducts.size(); i++) {
 
-			if (productCode.equals(actualProducts.get(i).getCode())) {
+			try {
 
-				itemPrice = actualProducts.get(i).getPrice();
-				SubtractFromBalance(itemPrice);
+				if (productCode.equals(actualProducts.get(i).getCode())) {
 
+					if (actualProducts.get(i).getNumberOfItems() > 0) {
 
-				System.out.println(actualProducts.get(i).getSoundEffect());
+						itemPrice = actualProducts.get(i).getPrice();
+						SubtractFromBalance(itemPrice);
+
+						System.out.println(actualProducts.get(i).getSoundEffect());
+						actualProducts.get(i).setNumberOfItems(actualProducts.get(i).getNumberOfItems() - 1);
+
+						CreateLog(actualProducts.get(i).getName() + " " + actualProducts.get(i).getCode(), actualProducts.get(i).getPrice());
+
+					} else {
+
+						throw new SoldOut();
+
+					}
+
+				}
+
+			} catch (SoldOut e) {
+
+				System.out.println("ITEM IS SOLD OUT, PLEASE CHOOSE DIFFERENT OPTION");
 
 			}
+
 		}
 
 
@@ -249,9 +190,12 @@ public class VendingMenu {
 
 		Scanner input = new Scanner(System.in);
 		System.out.println("\n" + "Please insert cash amount >>> ");
+
 		String value = input.nextLine();
 		double cash = Double.parseDouble((value));
+
 		this.cashBalance = getCashBalance() + cash;
+		CreateLog("FEED MONEY:", cash);
 		DisplayBalance();
 
 	}
@@ -269,21 +213,24 @@ public class VendingMenu {
 
 		double startingBalance = getCashBalance();
 		String finish = "";
+
 		int quarters = 0;
 		int nickels = 0;
 		int dimes = 0;
 		int pennies = 0;
 		double total = getCashBalance();
 
+		CreateLog("GIVE CHANGE:", startingBalance);
+
 		while (total > 0) {
 
-			if (total > .25) {
+			if (total >= .25) {
 				total -= .25;
 				quarters++;
-			} else if (total > .10) {
+			} else if (total >= .10) {
 				total -= .10;
 				dimes++;
-			} else if (total > .05) {
+			} else if (total >= .05) {
 				total -= .05;
 				nickels++;
 			} else {
@@ -293,9 +240,74 @@ public class VendingMenu {
 
 		}
 
-		finish = "Your change is $" + startingBalance + "." + " That comes out to " + quarters + " quarters " + dimes + " dimes " + nickels + " nickels " + pennies + " pennies.";
+		finish = "Your change is $" + CurrencyFormat(startingBalance) + "." + " That comes out to " + quarters + " quarters " + dimes + " dimes " + nickels + " nickels " + pennies + " pennies.";
 		System.out.println("\n" + finish);
 		setCashBalance(0);
+		DisplayBalance();
+	}
+
+	public String CurrencyFormat(double number) {
+
+		String updatedNumber = Double.toString(number);
+
+		int periodIndex = updatedNumber.indexOf(".");
+		int numberLength = updatedNumber.length();
+		int periodLength = updatedNumber.substring(periodIndex, numberLength).length();
+
+		if (periodLength == 3) {
+
+			return updatedNumber;
+
+		} else if (periodLength < 3) {
+
+			updatedNumber += "0";
+
+		} else {
+
+			updatedNumber = updatedNumber.substring(0, periodIndex + 3);
+
+		}
+
+		return updatedNumber;
+
+	}
+
+	public void ExitMessage() {
+		System.out.println("\nHave a nice day!");
+	}
+
+	public class SoldOut extends Exception {
+
+		public SoldOut (String errorMessage) {
+			super (errorMessage);
+		}
+
+		public SoldOut() {}
+
+	}
+
+	public void CreateLog(String operation, double money) {
+
+		File logFile = new File("Log.txt");
+		SimpleDateFormat dateTime = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
+		String dateTimeString = dateTime.format(new Date());
+
+		if (operation.equals("FEED MONEY:")) {
+			totalMoney += money;
+		} else {
+			totalMoney -= money;
+		}
+
+		String logLine = dateTimeString + " " + operation + " $" + CurrencyFormat(money) + " $" + CurrencyFormat(totalMoney);
+
+		try (Writer log = new FileWriter(logFile, true)) {
+
+			log.append(logLine + "\n");
+
+		} catch (Exception e) {
+			System.out.println("There was an error");
+		}
+
 	}
 
 

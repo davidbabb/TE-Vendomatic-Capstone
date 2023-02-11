@@ -28,7 +28,7 @@ public class VendingMachineCLI {
 		this.menu = menu;
 	}
 
-	public void run() {
+	public void run() throws VendingMenu.SoldOut {
 		boolean running = true;
 //		String pathOfFile = "C:\\Users\\Student\\workspace\\module-1-capstone-team-0\\vendingmachine.csv";
 //		File readingFile = new File(pathOfFile);
@@ -68,12 +68,14 @@ public class VendingMachineCLI {
 
 				}
 			} else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
+
+				menu.ExitMessage();
 				return;
 			}
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws VendingMenu.SoldOut {
 		VendingMenu menu = new VendingMenu(System.in, System.out);
 		VendingMachineCLI cli = new VendingMachineCLI(menu);
 		cli.run();
