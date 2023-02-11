@@ -1,12 +1,10 @@
 package com.techelevator;
 
-import com.techelevator.view.ProductItems;
-
-public class Drinks extends ProductItems {
+public class Drink extends ProductItems {
 
     private String soundEffect;
 
-    public Drinks(String code, String name, double price, String type) {
+    public Drink(String code, String name, double price, String type) {
         super(code, name, price, "Drinks");
     }
 

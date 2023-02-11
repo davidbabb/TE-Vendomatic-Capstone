@@ -1,7 +1,5 @@
 package com.techelevator;
 
-import com.techelevator.view.ProductItems;
-
 public class Gum extends ProductItems{
 
     private String soundEffect;

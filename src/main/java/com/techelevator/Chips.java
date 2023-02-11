@@ -1,7 +1,5 @@
 package com.techelevator;
 
-import com.techelevator.view.ProductItems;
-
 public class Chips extends ProductItems {
 
     private String soundEffect;

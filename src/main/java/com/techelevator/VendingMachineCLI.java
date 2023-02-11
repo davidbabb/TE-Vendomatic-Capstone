@@ -1,12 +1,5 @@
 package com.techelevator;
 
-import com.techelevator.view.VendingMenu;
-
-import java.io.File;
-import java.text.FieldPosition;
-import java.util.Locale;
-import java.util.Scanner;
-
 
 public class VendingMachineCLI {
 

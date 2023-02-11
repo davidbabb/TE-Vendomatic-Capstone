@@ -1,9 +1,8 @@
-package com.techelevator.view;
+package com.techelevator;
 
 import com.techelevator.*;
 
 import java.io.*;
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -55,7 +54,7 @@ public class VendingMenu {
 	}
 
 	public void DisplayBalance(){
-		System.out.println("\n" + "Your total balance: " + "$" + CurrencyFormat(getCashBalance()));
+		System.out.println("\n" + "Your total balance is " + "$" + CurrencyFormat(getCashBalance()));
 	}
 
 	private void displayMenuOptions(Object[] options) {
@@ -97,8 +96,8 @@ public class VendingMenu {
 					actualProducts.add(candy);
 					i++;
 				} else if (i < 12) {
-					Drinks drinks = new Drinks(code, product, doublePrice, type);
-					actualProducts.add(drinks);
+					Drink drink = new Drink(code, product, doublePrice, type);
+					actualProducts.add(drink);
 					i++;
 				} else {
 					Gum gum = new Gum(code, product, doublePrice, type);
@@ -133,6 +132,7 @@ public class VendingMenu {
 		System.out.println("\nEnter product code: "); // asks user for item code
 		String productCode = input.nextLine().toUpperCase(); //forces all input to Upper casing matching the .csv file
 		double itemPrice = 0.00;
+		double currentBalance = 0.00;
 
 		for (int i = 0; i < actualProducts.size(); i++) {
 
@@ -143,12 +143,17 @@ public class VendingMenu {
 					if (actualProducts.get(i).getNumberOfItems() > 0) {
 
 						itemPrice = actualProducts.get(i).getPrice();
+						currentBalance = getCashBalance();
 						SubtractFromBalance(itemPrice);
 
-						System.out.println(actualProducts.get(i).getSoundEffect());
-						actualProducts.get(i).setNumberOfItems(actualProducts.get(i).getNumberOfItems() - 1);
+						if (itemPrice < currentBalance) {
 
-						CreateLog(actualProducts.get(i).getName() + " " + actualProducts.get(i).getCode(), actualProducts.get(i).getPrice());
+							System.out.println("Dispensing " + actualProducts.get(i).getName() + "... Great choice!" );
+							System.out.println(actualProducts.get(i).getSoundEffect());
+							actualProducts.get(i).setNumberOfItems(actualProducts.get(i).getNumberOfItems() - 1);
+							CreateLog(actualProducts.get(i).getName() + " " + actualProducts.get(i).getCode(), actualProducts.get(i).getPrice());
+
+						}
 
 					} else {
 
@@ -156,11 +161,15 @@ public class VendingMenu {
 
 					}
 
+				} else if (i == actualProducts.size() - 1 && itemPrice == 0) {
+
+					System.out.println("\nINVALID PRODUCT CODE. PLEASE TRY AGAIN.");
+
 				}
 
 			} catch (SoldOut e) {
 
-				System.out.println("ITEM IS SOLD OUT, PLEASE CHOOSE DIFFERENT OPTION");
+				System.out.println("ITEM IS SOLD OUT, PLEASE CHOOSE A DIFFERENT OPTION");
 
 			}
 
@@ -200,12 +209,17 @@ public class VendingMenu {
 
 	}
 
-	public void SubtractFromBalance(double amount){
-		if(cashBalance >= amount){ // checks to see if the amount given by the user "cashBalance" is greater than amount we are looking to subtract from the cost of an item.
-			cashBalance -= amount;//if it is then we subtract the amount and then the new cashBalance given
-			DisplayBalance();
-		} else {
-			throw new IllegalArgumentException("Insufficient funds"); //if the cashBalance of the user is less then we use throw to have program say "Insufficient funds"
+	public void SubtractFromBalance(double amount) {
+
+		try {
+			if (cashBalance >= amount) { // checks to see if the amount given by the user "cashBalance" is greater than amount we are looking to subtract from the cost of an item.
+				cashBalance -= amount;//if it is then we subtract the amount and then the new cashBalance given
+				DisplayBalance();
+			} else {
+				throw new IllegalArgumentException(); //if the cashBalance of the user is less then we use throw to have program say "Insufficient funds"
+			}
+		} catch (IllegalArgumentException e) {
+			System.out.println("\nINSUFFICIENT FUNDS: PLEASE INSERT MONEY");
 		}
 	}
 
@@ -222,7 +236,7 @@ public class VendingMenu {
 
 		CreateLog("GIVE CHANGE:", startingBalance);
 
-		while (total > 0) {
+		while (total >= .01) {
 
 			if (total >= .25) {
 				total -= .25;
@@ -240,7 +254,7 @@ public class VendingMenu {
 
 		}
 
-		finish = "Your change is $" + CurrencyFormat(startingBalance) + "." + " That comes out to " + quarters + " quarters " + dimes + " dimes " + nickels + " nickels " + pennies + " pennies.";
+		finish = "Your change is $" + CurrencyFormat(startingBalance) + "." + " That comes out to " + quarters + " quarters, " + dimes + " dimes, " + nickels + " nickels, " + pennies + " pennies.";
 		System.out.println("\n" + finish);
 		setCashBalance(0);
 		DisplayBalance();
