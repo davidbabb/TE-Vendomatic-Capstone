@@ -75,7 +75,6 @@ public class VendingMenu {
 	public void CreateList() {
 
 		try (Scanner fileScanner = new Scanner(readingFile)) {
-			System.out.printf("\n%-5s %-20s %-10s %-5s \n\n", "ID", "Product", "Price", "Quantity");
 
 			int i = 0;
 
@@ -264,6 +263,39 @@ public class VendingMenu {
 		} else {
 			throw new IllegalArgumentException("Insufficient funds"); //if the cashBalance of the user is less then we use throw to have program say "Insufficient funds"
 		}
+	}
+
+	public void FinishTransaction() {
+
+		double startingBalance = getCashBalance();
+		String finish = "";
+		int quarters = 0;
+		int nickels = 0;
+		int dimes = 0;
+		int pennies = 0;
+		double total = getCashBalance();
+
+		while (total > 0) {
+
+			if (total > .25) {
+				total -= .25;
+				quarters++;
+			} else if (total > .10) {
+				total -= .10;
+				dimes++;
+			} else if (total > .05) {
+				total -= .05;
+				nickels++;
+			} else {
+				total -= .01;
+				pennies++;
+			}
+
+		}
+
+		finish = "Your change is $" + startingBalance + "." + " That comes out to " + quarters + " quarters " + dimes + " dimes " + nickels + " nickels " + pennies + " pennies.";
+		System.out.println("\n" + finish);
+		setCashBalance(0);
 	}
 
 
