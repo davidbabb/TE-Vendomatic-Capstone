@@ -1,6 +1,8 @@
 package com.techelevator;
 
 
+import java.io.File;
+
 public class VendingMachineCLI {
 
 	private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
@@ -21,21 +23,20 @@ public class VendingMachineCLI {
 		this.menu = menu;
 	}
 
-	public void run() throws VendingMenu.SoldOut {
+	public void run() throws Inventory.SoldOut {
 		boolean running = true;
-		User user = new User();
-		menu.CreateList();
+		Inventory inventory = new Inventory();
 		while (running) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
 			// A switch statement could also be used here.  Your choice.
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
 
-				menu.DisplayMenu();
+				inventory.DisplayMenu();
 
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 
-				menu.DisplayBalance();
+				inventory.DisplayBalance();
 
 				while (running) {
 
@@ -43,16 +44,16 @@ public class VendingMachineCLI {
 
 					if (inputChoice.equals(PURCHASE_MENU_OPTION_FEED_MONEY)) {
 
-						menu.DisplayBalance();
-						menu.FeedMoney();
+						inventory.DisplayBalance();
+						inventory.FeedMoney();
 
 					} else if (inputChoice.equals(PURCHASE_MENU_OPTION_SELECT_PRODUCT)) {
 
-						menu.SelectProduct();
+						inventory.SelectProduct();
 
 					} else if (inputChoice.equals(PURCHASE_MENU_OPTION_FINISH_TRANSACTION)) {
 
-						menu.FinishTransaction();
+						inventory.FinishTransaction();
 						break;
 
 					}
@@ -63,18 +64,18 @@ public class VendingMachineCLI {
 			}
 			else if (choice.equals(MAIN_MENU_SECRET_OPTION)) {
 
-				menu.SalesReport();
+				inventory.SalesReport();
 
 
 			} else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
 
-				menu.ExitMessage();
+				inventory.ExitMessage();
 				return;
 			}
 		}
 	}
 
-	public static void main(String[] args) throws VendingMenu.SoldOut {
+	public static void main(String[] args) throws Inventory.SoldOut {
 		VendingMenu menu = new VendingMenu(System.in, System.out);
 		VendingMachineCLI cli = new VendingMachineCLI(menu);
 		cli.run();

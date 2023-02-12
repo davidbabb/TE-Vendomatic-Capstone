@@ -1,6 +1,6 @@
 package com.techelevator;
 
-public class Gum extends ProductItems{
+public class Gum extends ProductItem {
 
     private String soundEffect;
 

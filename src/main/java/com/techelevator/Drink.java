@@ -1,6 +1,6 @@
 package com.techelevator;
 
-public class Drink extends ProductItems {
+public class Drink extends ProductItem {
 
     private String soundEffect;
 
