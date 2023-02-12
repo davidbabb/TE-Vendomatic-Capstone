@@ -3,6 +3,7 @@ package com.techelevator;
 import com.techelevator.*;
 
 import java.io.*;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -13,6 +14,7 @@ public class VendingMenu {
 	private List<ProductItems> actualProducts = new ArrayList<>();
 	private double cashBalance;
 	private double totalMoney;
+	
 
 	public VendingMenu(InputStream input, OutputStream output) {
 		this.out = new PrintWriter(output);
@@ -125,6 +127,8 @@ public class VendingMenu {
 
 
 
+
+
 	public void SelectProduct() throws SoldOut{
 
 		DisplayMenu();
@@ -176,24 +180,7 @@ public class VendingMenu {
 		}
 
 
-//			if (selectedSnack == null) { //if selected snack is null then provide invalid message
-//				System.out.println("Invalid product code. Please try again.");
-//			} else if (selectedSnack.getCount() == 0) { //if selectedSnack count is equal to 0 then provide sold out message
-//				System.out.println("Selected snack is sold out. Please select another product.");
-//			} else {
-//				if (user.getCashBalance() >= selectedSnack.getPrice()) { //checks if they user's cash balance is greater or equal to the price of the selected snack price
-//					user.SubtractFromBalance(selectedSnack.getPrice());
-//					{ //calls the method subtractFromBalance method on the user object and subtracts the price of the selectedSnack
-//						selectedSnack.reduceItemQuantityByOne();// calls the reduceItemQuantityByOne method (in ProductCount) on selectedSnack object and it will decrease by 1
-//						System.out.println("You have successfully purchased" + selectedSnack.getName()); //print out the String and name of product as confirmation
-//						System.out.println("Your balance is now $" + user.getCashBalance()); //prints out the string and the new balance
-//					}
-//				} else {
-//					System.out.println("Insufficient balance. Please add more money."); //prints out String if the users cash balance is less the the price of the selected snack.
-//				}
-//			}
-
-		}
+	}
 
 	public void FeedMoney() {
 
@@ -325,4 +312,22 @@ public class VendingMenu {
 	}
 
 
+	public void SalesReport() {
+
+		double totalSales = 0;
+		int startingInventory = 5;
+
+		System.out.printf("\n%-20s %-10s\n\n", "Item", "Quantity");
+
+		for (ProductItems actualProduct : actualProducts) {
+			int remainingQuantity = actualProduct.getRemainingQuantity();
+			if (remainingQuantity < actualProduct.getInitialQuantity()) {
+				System.out.printf("%-20s %-10d\n", actualProduct.getName(), ((remainingQuantity - actualProduct.getInitialQuantity()) + startingInventory));
+				totalSales = (actualProduct.getInitialQuantity() - remainingQuantity) * actualProduct.getPrice();
+
+			}
+		}
+		System.out.println("\n**TOTAL SALES** $" + String.format("%.2f", totalSales));
+
+	}
 }

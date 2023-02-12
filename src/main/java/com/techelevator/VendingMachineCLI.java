@@ -23,8 +23,6 @@ public class VendingMachineCLI {
 
 	public void run() throws VendingMenu.SoldOut {
 		boolean running = true;
-//		String pathOfFile = "C:\\Users\\Student\\workspace\\module-1-capstone-team-0\\vendingmachine.csv";
-//		File readingFile = new File(pathOfFile);
 		User user = new User();
 		menu.CreateList();
 		while (running) {
@@ -60,6 +58,14 @@ public class VendingMachineCLI {
 					}
 
 				}
+
+
+			}
+			else if (choice.equals(MAIN_MENU_SECRET_OPTION)) {
+
+				menu.SalesReport();
+
+
 			} else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
 
 				menu.ExitMessage();
@@ -76,20 +82,3 @@ public class VendingMachineCLI {
 
 	}
 }
-//	static public int countLines(File newFile) {
-//		int count = 0;
-//		try (Scanner masterFile = new Scanner(newFile)) {
-//			while (masterFile.hasNextLine()) {
-//
-//				masterFile.nextLine();
-//				count++;
-//
-//			}
-//		} catch (Exception e) {
-//			System.out.println("error occurred");
-//		}
-//		return count;
-//
-//	}
-
-//}

@@ -13,6 +13,7 @@ public abstract class ProductItems{
     private String type;
     private int numberOfItems;
     private String soundEffect;
+    private int initialQuantity;
 
     public ProductItems(String code, String name, double price, String type){
 
@@ -73,4 +74,15 @@ public abstract class ProductItems{
     }
 
 
+    public void setInitialQuantity(int initialQuantity) {
+        this.initialQuantity = initialQuantity;
+    }
+
+    public int getInitialQuantity() {
+        return initialQuantity;
+    }
+
+    public int getRemainingQuantity() {
+        return initialQuantity - numberOfItems;
+    }
 }
