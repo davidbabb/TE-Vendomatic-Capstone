@@ -68,4 +68,5 @@ public abstract class ProductItem {
     public int getRemainingQuantity() {
         return initialQuantity - numberOfItems;
     }
+
 }

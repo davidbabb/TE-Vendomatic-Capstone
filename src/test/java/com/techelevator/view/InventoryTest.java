@@ -5,11 +5,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Scanner;
 
 public class InventoryTest {
-
     private Inventory inventoryTest;
+    private ProductItem item;
     Scanner scanner = new Scanner(System.in);
 
     @Before
